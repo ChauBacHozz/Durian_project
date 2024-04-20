@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 
 options = webdriver.ChromeOptions()
 options.add_experimental_option("detach", True)
-# options.add_argument('--headless')
+options.add_argument('--headless')
 driver = webdriver.Chrome(options=options)
 CURRENT_PATH = os.getcwd()
 IMG_SAVE_PATH = "\\data\\raw\\"
