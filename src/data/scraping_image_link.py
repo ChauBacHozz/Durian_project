@@ -45,6 +45,7 @@ def get_images_from_google(wd, delay, max_images, keyword, link_dict):
 		
 options = webdriver.ChromeOptions()
 options.add_experimental_option("detach", True)
+options.add_argument("--disable-proxy-certificate-handler")
 # options.add_argument('--headless')
 driver = webdriver.Chrome(options=options)
 CURRENT_PATH = os.getcwd()
@@ -52,15 +53,14 @@ JSON_SAVE_PATH = "\\data\\raw\\images_link.json"
 
 if os.path.exists(CURRENT_PATH + JSON_SAVE_PATH) and os.stat(CURRENT_PATH + JSON_SAVE_PATH).st_size == 0:
 	link_dict = {}
+	print("Json file blank")
 else:
 	with open(CURRENT_PATH + JSON_SAVE_PATH, encoding="utf-8-sig") as data_fp:
 		link_dict = json.load(data_fp)
-print(type(link_dict))
-res = get_images_from_google(wd=driver, delay=1, max_images=10, 
+		print("Json file already have", len(link_dict), "links")
+res = get_images_from_google(wd=driver, delay=1, max_images=100, 
 							 keyword='durian', link_dict=link_dict)
 with open(CURRENT_PATH + JSON_SAVE_PATH, 'w') as data_fp:
     json.dump(res, data_fp, indent=4)
-# with open(CURRENT_PATH + JSON_SAVE_PATH, encoding="utf-8-sig") as data_fp:
-#     res = json.load(data_fp)
-# print(type(res[0]))
 driver.quit()
+
