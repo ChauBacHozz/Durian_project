@@ -32,4 +32,5 @@ else:
 		link_dict = json.load(data_fp)
 		print("Json file already have", len(link_dict), "links")
 		for i in link_dict:
+			print("Downloading",i)
 			download_image(CURRENT_PATH + IMG_SAVE_PATH, link_dict[i], str(i) + ".jpg")
