@@ -50,7 +50,7 @@ options.add_argument("--disable-proxy-certificate-handler")
 driver = webdriver.Chrome(options=options)
 CURRENT_PATH = os.getcwd()
 JSON_SAVE_PATH = "\\data\\raw\\images_link.json"
-
+keywords = ["hd street background", "hd Nature background", "hd Forest background", "hd forest food garden"]
 if os.path.exists(CURRENT_PATH + JSON_SAVE_PATH) and os.stat(CURRENT_PATH + JSON_SAVE_PATH).st_size == 0:
 	link_dict = {}
 	print("Json file blank")
@@ -58,9 +58,10 @@ else:
 	with open(CURRENT_PATH + JSON_SAVE_PATH, encoding="utf-8-sig") as data_fp:
 		link_dict = json.load(data_fp)
 		print("Json file already have", len(link_dict), "links")
-res = get_images_from_google(wd=driver, delay=1, max_images=100, 
-							 keyword='durian', link_dict=link_dict)
+for keyword in keywords:
+	link_dict = get_images_from_google(wd=driver, delay=1, max_images=30, 
+							 keyword=keyword, link_dict=link_dict)
 with open(CURRENT_PATH + JSON_SAVE_PATH, 'w') as data_fp:
-    json.dump(res, data_fp, indent=4)
+    json.dump(link_dict, data_fp, indent=4)
 driver.quit()
 
